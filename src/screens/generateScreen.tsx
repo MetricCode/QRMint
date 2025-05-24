@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   Dimensions,
+  Platform,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import ViewShot from 'react-native-view-shot';
@@ -88,6 +89,21 @@ export default function GenerateScreen() {
 
     setIsGenerating(true);
     try {
+      // Check if we're in Expo Go (limited media library access)
+      const isExpoGo = Platform.OS === 'ios' && !Platform.isTesting;
+      
+      if (isExpoGo) {
+        Alert.alert(
+          'Expo Go Limitation',
+          'Saving to photo library requires a development build. You can share the QR code instead.',
+          [
+            { text: 'OK' },
+            { text: 'Share Instead', onPress: handleShare }
+          ]
+        );
+        return;
+      }
+
       const { status } = await MediaLibrary.requestPermissionsAsync();
       if (status !== 'granted') {
         Alert.alert('Permission needed', 'Please grant photo library access to save QR codes');
@@ -95,8 +111,12 @@ export default function GenerateScreen() {
       }
 
       if (viewShotRef.current) {
-        const uri = await viewShotRef.current.capture();
-        await MediaLibrary.saveToLibraryAsync(uri);
+        const uri = await viewShotRef.current?.capture();
+        if (uri) {
+          await MediaLibrary.saveToLibraryAsync(uri);
+        } else {
+          throw new Error('Failed to capture QR code image');
+        }
         Alert.alert('Success', 'QR code saved to photo library!');
       }
     } catch (error) {

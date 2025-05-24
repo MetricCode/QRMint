@@ -59,16 +59,14 @@ export default function HomeScreen({ navigation }: any) {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <LinearGradient
-        colors={colors.gradient}
+        colors={colors.gradient as [string, string]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.header}
       >
         <View style={styles.headerContent}>
-          <Text style={styles.welcomeText}>Welcome to</Text>
-          <Text style={styles.appTitle}>QR Master</Text>
           <Text style={styles.subtitle}>
-            Create beautiful QR codes and scan them with ease
+            Create beautiful QR codes and scan them with ease!
           </Text>
         </View>
       </LinearGradient>

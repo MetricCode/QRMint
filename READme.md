@@ -1,4 +1,4 @@
-# QR Master - React Native QR Code Generator & Scanner
+# QRMint - React Native QR Code Generator & Scanner
 
 A beautiful, feature-rich QR code generator and scanner app built with React Native and Expo.
 

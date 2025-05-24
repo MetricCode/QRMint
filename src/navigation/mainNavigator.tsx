@@ -48,7 +48,7 @@ export default function MainNavigator() {
       <Tab.Screen 
         name="Home" 
         component={HomeScreen} 
-        options={{ title: 'QR Master' }}
+        options={{ title: 'QRMint' }}
       />
       <Tab.Screen 
         name="Generate" 
